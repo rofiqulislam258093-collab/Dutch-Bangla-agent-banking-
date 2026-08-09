@@ -1,1 +1,924 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ডাচ্-বাংলা ব্যাংক এজেন্ট ব্যাংকিং | পাছার বাজার, গৌরীপুর</title>
+    <!-- Google Font & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <style>
+        :root {
+            --dbbl-green: #006738;
+            --dbbl-dark-green: #004d2a;
+            --dbbl-red: #e31b23;
+            --bg-light: #f4f7f6;
+            --text-dark: #222222;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Hind Siliguri', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding-bottom: 50px;
+            padding-top: 105px; /* Fixed space for Header + Ticker */
+        }
+
+        /* FIXED TOP WRAPPER */
+        .fixed-header-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        /* UJJWAL GLOWING SCROLLING MARQUEE TICKER */
+        .top-marquee-bar {
+            background: #002212;
+            color: #ffffff;
+            padding: 6px 0;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-bottom: 2px solid var(--dbbl-red);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .marquee-item {
+            margin: 0 15px;
+            color: #ffffff;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+            white-space: nowrap;
+        }
+
+        .marquee-highlight {
+            color: #ffee00;
+            font-weight: 800;
+            text-shadow: 0 0 8px rgba(255, 238, 0, 0.9);
+            margin: 0 15px;
+            white-space: nowrap;
+        }
+
+        .marquee-sep {
+            color: var(--dbbl-red);
+            font-weight: bold;
+            margin: 0 5px;
+        }
+
+        /* FIXED NAVBAR CONTAINER */
+        .navbar {
+            height: 55px;
+            background-color: var(--dbbl-dark-green);
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-container {
+            width: 100%;
+            max-width: 1250px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+        }
+
+        .nav-logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        /* 💻 DESKTOP HORIZONTAL MENU */
+        .desktop-menu {
+            display: none; /* Hidden on Mobile */
+            list-style: none;
+            align-items: center;
+            gap: 2px;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+        }
+
+        .desktop-menu::-webkit-scrollbar {
+            display: none;
+        }
+
+        .desktop-menu li {
+            flex-shrink: 0;
+        }
+
+        .desktop-menu li a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 5px 8px;
+            border-radius: 5px;
+            transition: 0.2s ease;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .desktop-menu li a:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .desktop-menu li a.nav-campaign-btn {
+            background: #e65100;
+            color: #ffffff;
+        }
+
+        .desktop-menu li a.nav-contact-btn {
+            background: var(--dbbl-red);
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-left: 4px;
+        }
+
+        .desktop-menu li a.nav-contact-btn:hover {
+            background: #b80d14;
+        }
+
+        /* 📱 THREE DOT BUTTON FOR MOBILE */
+        .three-dot-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            flex-shrink: 0;
+        }
+
+        .three-dot-btn:hover {
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        /* RESPONSIVE BREAKPOINT */
+        @media (min-width: 768px) {
+            .three-dot-btn {
+                display: none !important;
+            }
+            .desktop-menu {
+                display: flex !important;
+            }
+        }
+
+        /* BACKDROP OVERLAY FOR MOBILE MENU */
+        .menu-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: 0.3s ease;
+        }
+
+        .menu-backdrop.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        /* MOBILE SIDE MENU DRAWER */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: -310px;
+            width: 290px;
+            height: 100%;
+            background: #ffffff;
+            z-index: 1002;
+            box-shadow: -4px 0 15px rgba(0,0,0,0.2);
+            transition: 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .side-menu.active {
+            right: 0;
+        }
+
+        .menu-header {
+            background: var(--dbbl-green);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-header h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .menu-list {
+            list-style: none;
+            padding: 15px 0;
+        }
+
+        .menu-list li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            border-bottom: 1px solid #f0f0f0;
+            transition: 0.2s;
+        }
+
+        .menu-list li a:hover {
+            background: #eef7f2;
+            color: var(--dbbl-green);
+            padding-left: 25px;
+        }
+
+        .menu-list li a i {
+            color: var(--dbbl-green);
+            width: 20px;
+            text-align: center;
+        }
+
+        .direct-contact-cta {
+            margin: 15px 20px;
+            padding: 15px;
+            background: linear-gradient(135deg, #e31b23, #b80d14);
+            color: white;
+            border-radius: 10px;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            box-shadow: 0 4px 10px rgba(227, 27, 35, 0.3);
+            transition: 0.2s;
+        }
+
+        /* CUSTOM BANNER SECTION */
+        .banner-container {
+            max-width: 1000px;
+            margin: 10px auto 0;
+            padding: 0 15px;
+        }
+
+        .top-banner-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+            border: 1px solid #ddd;
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        /* SECTION CARDS */
+        .section-card {
+            background: white;
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #e0e0e0;
+            scroll-margin-top: 115px;
+        }
+
+        .section-header {
+            font-size: 1.4rem;
+            color: var(--dbbl-green);
+            border-left: 5px solid var(--dbbl-red);
+            padding-left: 12px;
+            margin-bottom: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* 🔥 CAMPAIGN SECTION CARD STYLING */
+        .campaign-card {
+            background: linear-gradient(135deg, #fffdfa, #fff8f0);
+            border: 2px dashed #f57c00;
+            border-left: 6px solid #e65100;
+            position: relative;
+        }
+
+        .campaign-badge {
+            background: linear-gradient(135deg, #e65100, #ff9800);
+            color: white;
+            font-weight: bold;
+            padding: 4px 14px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 6px rgba(230, 81, 0, 0.25);
+        }
+
+        .campaign-title {
+            color: #d84315;
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .campaign-banner-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+            margin: 12px 0;
+            border: 1px solid #ffe0b2;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        /* WHATSAPP CAMPAIGN BUTTON */
+        .btn-campaign {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            padding: 12px 26px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 0.98rem;
+            text-decoration: none;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        .btn-campaign:hover {
+            background: #075e54;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(7, 94, 84, 0.4);
+        }
+
+        /* DIRECTOR'S PROFILE CARD */
+        .director-card {
+            background: linear-gradient(135deg, #ffffff, #f4faf6);
+            border: 1px solid #c8e6c9;
+            border-left: 6px solid var(--dbbl-green);
+        }
+
+        .director-container {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .director-img-wrapper {
+            position: relative;
+            flex-shrink: 0;
+            margin: 0 auto;
+        }
+
+        .director-img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--dbbl-green);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            background: #e2e2e2;
+        }
+
+        .director-info {
+            flex: 1;
+            min-width: 250px;
+            text-align: left;
+        }
+
+        .director-badge {
+            background: var(--dbbl-red);
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 6px;
+        }
+
+        .director-title {
+            color: #555;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .director-name {
+            color: var(--dbbl-green);
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .director-desc {
+            color: #444;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* FEATURE LIST */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .feature-item {
+            background: #f8faf9;
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .feature-item h4 {
+            color: var(--dbbl-green);
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-item p {
+            font-size: 0.95rem;
+            color: #444;
+        }
+
+        /* BULLET SERVICES LIST */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 10px;
+        }
+
+        .service-list-item {
+            background: #eef7f2;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #1b4332;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .service-list-item i {
+            color: var(--dbbl-green);
+        }
+
+        /* TABLES STYLING */
+        .table-responsive {
+            overflow-x: auto;
+            margin-top: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            text-align: center;
+            font-size: 0.92rem;
+            min-width: 500px;
+        }
+
+        th {
+            background-color: var(--dbbl-green);
+            color: white;
+            padding: 12px 8px;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #eee;
+            color: #333;
+        }
+
+        tr:nth-child(even) { background-color: #f9fbf9; }
+        tr:hover { background-color: #f1f8f3; }
+
+        .rate-badge {
+            background: var(--dbbl-red);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-left: 8px;
+        }
+
+        .account-banner-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .outlet-card {
+            background: linear-gradient(135deg, #ffffff, #f0f7f3);
+            border: 2px solid var(--dbbl-green);
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            scroll-margin-top: 115px;
+        }
+
+        .btn-external-contact {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--dbbl-green), var(--dbbl-dark-green));
+            color: white;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0, 103, 56, 0.3);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-external-contact:hover {
+            background: var(--dbbl-red);
+            box-shadow: 0 6px 20px rgba(227, 27, 35, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .cta-banner {
+            background: var(--dbbl-green);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 650px) {
+            body { padding-top: 110px; }
+            .director-info { text-align: center; }
+            .director-container { justify-content: center; }
+            .btn-external-contact { font-size: 0.95rem; padding: 12px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- FIXED TOP HEADER (TICKER + NAVBAR) -->
+    <div class="fixed-header-wrapper">
+        
+        <!-- 🌟 UJJWAL LIVE SCROLLING MARQUEE HEADER -->
+        <div class="top-marquee-bar">
+            <marquee behavior="scroll" direction="left" scrollamount="6" onmouseover="this.stop();" onmouseout="this.start();">
+                <span class="marquee-item">📍 পাছার বাজার ডাচ্-বাংলা ব্যাংক এজেন্ট ব্যাংকিং, গৌরীপুর, ময়মনসিংহ</span>
+                <span class="marquee-sep">|</span>
+                <span class="marquee-item">🕘 কর্মদিবস: শনিবার–বৃহস্পতিবার</span>
+                <span class="marquee-sep">|</span>
+                <span class="marquee-item">☀️ সকাল ৯টা – সন্ধ্যা ৭টা</span>
+                <span class="marquee-sep">|</span>
+                <span class="marquee-item">🚫 সাপ্তাহিক ছুটি: শুক্রবার</span>
+                <span class="marquee-sep">|</span>
+                <span class="marquee-highlight">🌟 আমরা আছি আপনার পাশে — উন্নত সেবার প্রতিশ্রুতি।</span>
+            </marquee>
+        </div>
+
+        <!-- FIXED NAVBAR -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fa-solid fa-building-columns"></i> DBBL Agent Banking
+                </div>
+
+                <!-- 💻 DESKTOP MENU -->
+                <ul class="desktop-menu">
+                    <li><a href="#top"><i class="fa-solid fa-house"></i> হোম</a></li>
+                    <li><a href="#campaign-section" class="nav-campaign-btn"><i class="fa-solid fa-fire"></i> অফার / ক্যাম্পেইন</a></li>
+                    <li><a href="#director-section">পরিচালক</a></li>
+                    <li><a href="#highlights">কেন বেছে নেবেন?</a></li>
+                    <li><a href="#services">সেবাসমূহ</a></li>
+                    <li><a href="#dps-section">DPS</a></li>
+                    <li><a href="#fdr-section">FDR</a></li>
+                    <li><a href="#requirements">একাউন্ট খোলা</a></li>
+
+                    <!-- 🔗 ডেমো লিংক সমূহ -->
+                    <li><a href="YOUR_LINK_HERE_1">লিংক ১</a></li>
+                    <li><a href="YOUR_LINK_HERE_2">লিংক ২</a></li>
+
+                    <li><a href="https://your-website-contact-link.com" target="_blank" class="nav-contact-btn"><i class="fa-solid fa-headset"></i> যোগাযোগ</a></li>
+                </ul>
+
+                <!-- 📱 THREE DOT BUTTON FOR MOBILE -->
+                <button class="three-dot-btn" onclick="openMenu()" aria-label="Menu">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+            </div>
+        </nav>
+    </div>
+
+    <!-- BACKDROP & SIDE MENU DRAWER (FOR MOBILE) -->
+    <div class="menu-backdrop" id="menuBackdrop" onclick="closeMenu()"></div>
+    
+    <aside class="side-menu" id="sideMenu">
+        <div class="menu-header">
+            <h3><i class="fa-solid fa-bars-staggered"></i> নেভিগেশন মেনু</h3>
+            <button class="close-btn" onclick="closeMenu()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <ul class="menu-list">
+            <li><a href="#top" onclick="closeMenu()"><i class="fa-solid fa-house"></i> হোম / শীর্ষে যান</a></li>
+            <li><a href="#campaign-section" onclick="closeMenu()"><i class="fa-solid fa-fire"></i> বিশেষ অফার / ক্যাম্পেইন</a></li>
+            <li><a href="#director-section" onclick="closeMenu()"><i class="fa-solid fa-user-tie"></i> পরিচালকের বার্তা</a></li>
+            <li><a href="#highlights" onclick="closeMenu()"><i class="fa-solid fa-star"></i> কেন বেছে নেবেন?</a></li>
+            <li><a href="#services" onclick="closeMenu()"><i class="fa-solid fa-list-check"></i> এক নজরে সেবাসমূহ</a></li>
+            <li><a href="#dps-section" onclick="closeMenu()"><i class="fa-solid fa-chart-line"></i> DPS স্কীম</a></li>
+            <li><a href="#fdr-section" onclick="closeMenu()"><i class="fa-solid fa-piggy-bank"></i> FDR স্কীম</a></li>
+            <li><a href="#requirements" onclick="closeMenu()"><i class="fa-solid fa-id-card"></i> একাউন্ট খুলতে যা লাগবে</a></li>
+
+            <!-- 🔗 মোবাইলের ডেমো লিংক সমূহ -->
+            <li><a href="YOUR_LINK_HERE_1" onclick="closeMenu()"><i class="fa-solid fa-link"></i> ডেমো লিংক ১</a></li>
+            <li><a href="YOUR_LINK_HERE_2" onclick="closeMenu()"><i class="fa-solid fa-link"></i> ডেমো লিংক ২</a></li>
+        </ul>
+
+        <a href="https://your-website-contact-link.com" target="_blank" onclick="closeMenu()" class="direct-contact-cta">
+            <h4><i class="fa-solid fa-headset"></i> সরাসরি যোগাযোগ করুন</h4>
+            <p>আমাদের সাথে যোগাযোগ করতে এখানে চাপুন</p>
+        </a>
+    </aside>
+
+    <!-- 🖼️ YOUR CUSTOM BANNER IMAGE SECTION -->
+    <div class="banner-container" id="top">
+        <img src="https://i.postimg.cc/q7BWwJQP/Picsart-26-08-09-18-35-54-021.jpg" alt="ডাচ্-বাংলা ব্যাংক এজেন্ট ব্যাংকিং ব্যানার" class="top-banner-img">
+    </div>
+
+    <div class="container">
+
+        <!-- 🔥 SPECIAL CAMPAIGN / OFFER SECTION -->
+        <div class="section-card campaign-card" id="campaign-section">
+            <span class="campaign-badge"><i class="fa-solid fa-fire"></i> সীমিত সময়ের বিশেষ অফার</span>
+            <h3 class="campaign-title"><i class="fa-solid fa-bullhorn"></i> বিশেষ সার্ভিস ক্যাম্পেইন চলছে!</h3>
+            <p style="color: #444; font-size: 0.98rem; margin-top: 5px;">
+                আমাদের পাছার বাজার ডাচ্-বাংলা ব্যাংক এজেন্ট আউটলেটে নির্দিষ্ট সময়ের জন্য বিশেষ সার্ভিস ক্যাম্পেইন চলছে। এখনই ফ্রিতে হিসাব খুলুন অথবা DPS/FDR করে বুঝে নিন বিশেষ সুবিধা ও আকর্ষণীয় উপহার।
+            </p>
+            
+            <!-- ক্যাম্পেইনের ছবি যদি থাকে তবে নিচে 'campaign.jpg' এর জায়গায় আপনার ছবির ফাইল নেম দিন -->
+            <img src="campaign.jpg" alt="ক্যাম্পেইন অফার ব্যানার" class="campaign-banner-img">
+
+            <div>
+                <!-- 💬 WHATSAPP DIRECT CHAT LINK WITH PRE-FILLED TEXT -->
+                <a href="https://wa.me/8801714136261?text=আমি ডাচ্-বাংলা ব্যাংকের%20এজেন্ট ব্যাংকিং%20অফার%20গ্রহণ%20করতে%20 আগ্রহী" target="_blank" class="btn-campaign">
+                    <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> ক্যাম্পেইনের অফার গ্রহণ করতে ক্লিক করুন
+                </a>
+            </div>
+        </div>
+
+        <!-- 👔 MANAGING DIRECTOR'S PROFILE CARD -->
+        <div class="section-card director-card" id="director-section">
+            <div class="director-container">
+                <div class="director-img-wrapper">
+                    <!-- পরিচালকের ছবি বসাতে নিচে 'director.jpg' নাম দিন -->
+                    <img src="https://i.postimg.cc/6Qb8MQL6/Picsart-26-08-09-19-51-24-650.jpg" alt="MD JIAUL HAQUE" class="director-img">
+                </div>
+                <div class="director-info">
+                    <span class="director-badge"><i class="fa-solid fa-user-tie"></i> পরিচালকের বার্তা</span>
+                    <h4 class="director-title">Managing Director</h4>
+                    <h2 class="director-name">MD : JIAUL HAQUE</h2>
+                    <p class="director-desc">
+                        আপনাদের সেবায় আমরা সর্বদা নিয়োজিত। ডাচ্-বাংলা ব্যাংক এজেন্ট ব্যাংকিং এর মাধ্যমে দ্রুত, নিরাপদ ও নির্ভরযোগ্য ব্যাংকিং সেবা পেতে পাছার বাজার আউটলেটে আপনাকে সাদর আমন্ত্রণ।
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1. KEY HIGHLIGHTS -->
+        <div class="section-card" id="highlights">
+            <div class="section-header">
+                <i class="fa-solid fa-star"></i> কেন বেছে নেবেন এজেন্ট ব্যাংকিং?
+            </div>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h4><i class="fa-solid fa-map-location-dot"></i> ১. প্রতিটি ইউনিয়নে সেবা</h4>
+                    <p>বাংলাদেশের যেকোনো প্রান্ত থেকে ডাচ-বাংলা ব্যাংক এজেন্ট ব্যাংকিং-এর মাধ্যমে অতি সহজে টাকা জমা ও উত্তোলন করুন।</p>
+                </div>
+                <div class="feature-item">
+                    <h4><i class="fa-solid fa-clock"></i> ২. সময় বাঁচান (সপ্তাহে ৬ দিন)</h4>
+                    <p><b>সকাল ৯:৩০ - সন্ধ্যা ৭:০০</b> (শনিবার থেকে বৃহস্পতিবার খোলা)। কাজ শেষেও নিশ্চিন্তে ব্যাংকিং করুন।</p>
+                </div>
+                <div class="feature-item">
+                    <h4><i class="fa-solid fa-fingerprint"></i> ৩. ১০০% নিরাপদ বায়োমেট্রিক</h4>
+                    <p>আঙুলের ছাপে অ্যাকাউন্ট। আপনি ছাড়া অন্য কারও টাকা তোলার সুযোগ নেই, তাই আপনার আমানত ১০০% সুরক্ষিত।</p>
+                </div>
+                <div class="feature-item">
+                    <h4><i class="fa-solid fa-mobile-screen-button"></i> ৪. নেক্সাসপে (NexusPay) অ্যাপ</h4>
+                    <p>দেশ ও বিদেশ থেকে সহজে লেনদেন করুন। ঘরে বসেই অ্যাপ দিয়ে DPS ও FDR খোলার সুবিধা।</p>
+                </div>
+                <div class="feature-item">
+                    <h4><i class="fa-solid fa-credit-card"></i> ৫. কার্ড ও চেক বই</h4>
+                    <p>অ্যাকাউন্ট খোলার সাথেই পাবেন ডেবিট কার্ড ও চেক বই যা ব্যবহার করা যাবে দেশজুড়ে।</p>
+                </div>
+                <div class="feature-item">
+                    <h4><i class="fa-solid fa-hand-holding-hand"></i> ৬. ঋণ ও বৈদেশিক রেমিট্যান্স</h4>
+                    <p>সহজ শর্তে Personal, Home ও Commercial ঋণ সুবিধা এবং সরকারি প্রণোদনাসহ রেমিট্যান্স গ্রহণ।</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. AT A GLANCE SERVICES -->
+        <div class="section-card" id="services">
+            <div class="section-header">
+                <i class="fa-solid fa-list-check"></i> এক নজরে আমাদের সেবা সমূহ
+            </div>
+            <div class="services-grid">
+                <div class="service-list-item"><i class="fa-solid fa-circle-check"></i> সঞ্চয়ী হিসাব (Savings A/C) খোলা</div>
+                <div class="service-list-item"><i class="fa-solid fa-circle-check"></i> চলতি হিসাব (Current A/C) খোলা</div>
+                <div class="service-list-item"><i class="fa-solid fa-circle-check"></i> সুদমুক্ত ইসলামিক শরিয়াহ হিসাব</div>
+                <div class="service-list-item"><i class="fa-solid fa-circle-check"></i> নগদ টাকা জমাদান ও উত্তোলন</div>
+                <div class="service-list-item"><i class="fa-solid fa-circle-check"></i> ডিপোজিট প্লাস স্কীম (DPS)</div>
+                <div class="service-list-item"><i class="fa-solid fa-circle-check"></i> ফিক্সড ডিপোজিট (FDR)</div>
+                <div class="service-list-item"><i class="fa-solid fa-circle-check"></i> বৈশ্বিক রেমিট্যান্স (প্রণোদনাসহ)</div>
+                <div class="service-list-item"><i class="fa-solid fa-circle-check"></i> বেতন ও ভাতা প্রদান সুবিধা</div>
+                <div class="service-list-item"><i class="fa-solid fa-circle-check"></i> ইউটিলিটি বিল পরিশোধ (বিদ্যুৎ/গ্যাস/পানি)</div>
+                <div class="service-list-item"><i class="fa-solid fa-circle-check"></i> ইন্টারনেট ব্যাংকিং ও NexusPay</div>
+                <div class="service-list-item"><i class="fa-solid fa-circle-check"></i> সহজ শর্তে ঋণ (Loan) সুবিধা</div>
+                <div class="service-list-item"><i class="fa-solid fa-circle-check"></i> এটিএম কার্ড ও চেক বই প্রদান</div>
+                <div class="service-list-item"><i class="fa-solid fa-circle-check"></i> বাৎসরিক চার্জ মুক্ত ব্যাংক হিসাব</div>
+                <div class="service-list-item"><i class="fa-solid fa-circle-check"></i> দেশজুড়ে ATM/CRM লেনদেন সুবিধা</div>
+            </div>
+        </div>
+
+        <!-- 3. DPS TABLE SECTION -->
+        <div class="section-card" id="dps-section">
+            <div class="section-header">
+                <i class="fa-solid fa-chart-line"></i> বায়োমেট্রিক ডিপোজিট প্লাস স্কীম (DPS)
+                <span class="rate-badge">সুদের হার: ৯.৫%</span>
+            </div>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">
+                * মাসিক কিস্তি এবং মেয়াদান্তে প্রদেয় (ট্যাক্স পূর্ব) টাকার পরিমাণ (BDT-তে):
+            </p>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>মাসিক কিস্তি (EMI)</th>
+                            <th>৩ বছর (3 YRS)</th>
+                            <th>৫ বছর (5 YRS)</th>
+                            <th>৮ বছর (8 YRS)</th>
+                            <th>১০ বছর (10 YRS)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><b>৫০৩ টাকা</b></td><td>২০,৮৯৭</td><td>৩৮,৫১৪</td><td>৭২,০৫৪</td><td>১,০০,৩২৮</td></tr>
+                        <tr><td><b>১,০০০ টাকা</b></td><td>৪১,৭৯৪</td><td>৭৭,০২৭</td><td>১,৪৪,১০৭</td><td>২,০০,৬৫৭</td></tr>
+                        <tr><td><b>১,১৫০০ টাকা</b></td><td>৬২,৬৯১</td><td>১,১৫,৫৪০</td><td>২,১৬,১৬১</td><td>৩,০০,৯৮৫</td></tr>
+                        <tr><td><b>২,০০০ টাকা</b></td><td>৮৩,৫৮৮</td><td>১,৫৪,০৫৫</td><td>২,৮৮,২১৪</td><td>৪,০১,৩১৩</td></tr>
+                        <tr><td><b>২,৫০৩ টাকা</b></td><td>১,০৪,৪৮৫</td><td>১,৯২,৫৬৮</td><td>৩,৬০,২৬৮</td><td>৫,০১,৬৪২</td></tr>
+                        <tr><td><b>৩,০০০ টাকা</b></td><td>১,২৫,৩৮২</td><td>২,৩১,০৮২</td><td>৪,৩২,৩২১</td><td>৬,০১,৯৭০</td></tr>
+                        <tr><td><b>৪,০০০ টাকা</b></td><td>১,৬৭,১৭৬</td><td>৩,০৮,১০৯</td><td>৫,৭৬,৪২৮</td><td>৮,০২,৬২৭</td></tr>
+                        <tr><td><b>৫,০০০ টাকা</b></td><td>২,০৮,৯৭০</td><td>৩,৮৫,১৩৬</td><td>৭,২০,৫৩৫</td><td>১০,০৩,২৮৪</td></tr>
+                        <tr><td><b>১০,০০০ টাকা</b></td><td>৪,১৭,৯৪০</td><td>৭,৭০,২৭৩</td><td>১৪,৪১,০৭১</td><td>২০,০৬,৫৬৭</td></tr>
+                        <tr><td><b>১৫,০০০ টাকা</b></td><td>৬,২৬,৯১০</td><td>১১,৫৫,৪০৯</td><td>২১,৬১,৬০৬</td><td>৩০,০৯,৮৫১</td></tr>
+                        <tr><td><b>৩০,০০০ টাকা</b></td><td>১২,৫৩,৮২১</td><td>২৩,১০,৮১৮</td><td>৪৩,২৩,২১২</td><td>৬০,১৯,৭০২</td></tr>
+                        <tr><td><b>৫০,০০০ টাকা</b></td><td>২০,৮৯,৭০২</td><td>৩৮,৫১,৩৬৩</td><td>৭২,০৫,৩৫৪</td><td>১,০০,৩২,৮৩৭</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 4. FDR TABLE SECTION -->
+        <div class="section-card" id="fdr-section">
+            <div class="section-header">
+                <i class="fa-solid fa-piggy-bank"></i> ফিক্সড ডিপোজিট (FDR)
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>জমার পরিমাণ (Amount)</th>
+                            <th>সময়কাল (Tenure)</th>
+                            <th>মুনাফার হার (Rate)</th>
+                            <th>মাসিক প্রদেয় (Monthly Payable)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>১,০০,০০০ টাকা</td><td>৩ মাস</td><td>৭.০০%</td><td><b>৫৮৩ টাকা</b></td></tr>
+                        <tr><td>১,০০,০০০ টাকা</td><td>৬ মাস</td><td>৭.১০%</td><td><b>৫৯২ টাকা</b></td></tr>
+                        <tr><td>১,০০,০০০ টাকা</td><td>১ বছর</td><td>৭.২০%</td><td><b>৬০০ টাকা</b></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size: 0.85rem; color: #888; margin-top: 8px;">* Excise Duty & Tax are Applicable in all Proceeds as per Bangladesh Bank rules.</p>
+        </div>
+
+        <!-- 5. BANNER FOR ACCOUNT REQUIREMENTS -->
+        <div class="section-card" id="requirements">
+            <div class="section-header">
+                <i class="fa-solid fa-id-card"></i> একাউন্ট খুলতে যা যা লাগবে
+            </div>
+            <img src="https://i.postimg.cc/sXCzcdQ0/Picsart-26-08-09-19-16-33-929.jpg" alt="একাউন্ট খুলতে যা যা লাগবে ব্যানার" class="account-banner-img">
+        </div>
+
+        <!-- CALL TO ACTION BANNER -->
+        <div class="cta-banner">
+            আজই আপনার সঞ্চয় ও সমৃদ্ধির যাত্রা শুরু করুন...
+        </div>
+
+        <!-- 6. EXTERNAL CONTACT LINK SECTION -->
+        <div class="outlet-card" id="contact-section">
+            <h2 style="color: var(--dbbl-green); font-size: 1.4rem; margin-bottom: 10px;">
+                <i class="fa-solid fa-address-book"></i> যোগাযোগ ও বিস্তারিত জানতে
+            </h2>
+            <p style="margin-bottom: 15px; color: #555; font-size: 1.05rem;">
+                আমাদের সাথে সরাসরি যোগাযোগ করতে নিচের বাটনে ক্লিক করুন:
+            </p>
+            <a href="personal-contract-bangking-service.netlify.app" target="_blank" class="btn-external-contact">
+                <i class="fa-solid fa-headset"></i> আমাদের সাথে যোগাযোগ করুন (ক্লিক করুন)
+            </a>
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT FOR MOBILE MENU TOGGLE -->
+    <script>
+        function openMenu() {
+            document.getElementById('sideMenu').classList.add('active');
+            document.getElementById('menuBackdrop').classList.add('active');
+        }
+
+        function closeMenu() {
+            document.getElementById('sideMenu').classList.remove('active');
+            document.getElementById('menuBackdrop').classList.remove('active');
+        }
+    </script>
+</body>
+</html>
